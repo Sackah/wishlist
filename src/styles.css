@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    background: #1e1e1e;
+    color: #fff;
+}
+
+a{
+    text-decoration: none;
+    color: #fff;
+    /* padding: 8px 16px;
+    border-radius: 6px;
+    background: lightseagreen; */
+}
+
+a.active-page{
+    color: blue;
+}

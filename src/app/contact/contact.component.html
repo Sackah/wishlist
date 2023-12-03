@@ -1,0 +1,43 @@
+<form (ngSubmit)="submitForm($event)" [formGroup]="contactForm" class="container p-5">
+    @if (contactForm.valid) {
+        <div style="color: greenyellow;">Your credentials are valid</div>
+    }
+    <div class="mb-3">
+        <label for="name" class="form-label">Your name</label>
+        <input id="name" type="text" class="form-control" formControlName="senderName">
+        @if (contactForm.get('senderName')?.invalid && contactForm.get('senderName')?.dirty) {
+            @if (contactForm.get('senderName')?.hasError('required')) {
+                <div class="text-danger">Please enter your name</div>
+            }
+        }
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Your email</label>
+        <input id="email" type="email" class="form-control" formControlName="senderEmail">
+        @if (contactForm.get('senderEmail')?.invalid && contactForm.get('senderEmail')?.dirty || contactForm.get('senderEmail')?.touched) {
+            @if (contactForm.get('senderEmail')?.hasError('required')) {
+                <div class="text-danger">Email is required</div>
+            } @else if (contactForm.get('senderEmail')?.hasError('email')) {
+                <div class="text-danger">Please enter a valid email adress</div>
+            } @else if (contactForm.get('senderEmail')?.hasError('invalidDomain')) {
+                <div class="text-danger">Domain name is not allowed</div>
+            }
+        }
+    </div>
+    <div class="mb-3">
+        <label for="message" class="form-label">Message</label>
+        <textarea id="message" class="form-control" rows="3" 
+            formControlName="senderMessage">
+        </textarea>
+        @if (contactForm.get('senderMessage')?.invalid && contactForm.get('senderMessage')?.dirty){
+            @if (contactForm.get('senderMessage')?.hasError('required')) {
+                <div class="text-danger">Please enter a message</div>
+            } @else if (contactForm.get('senderMessage')?.hasError('minlength')) {
+                <div class="text-danger">Message should be at least 10 characters long</div>
+            }
+        }
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary" [disabled]="contactForm.invalid">Send Message</button>
+    </div>
+</form>

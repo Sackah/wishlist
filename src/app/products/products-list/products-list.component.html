@@ -1,0 +1,10 @@
+<div class="container">
+   @for (product of products; track $index) {
+    <div class="row">
+        <h4><a [routerLink]="['/products', product.id]">
+            {{product.name}}
+            </a>
+        </h4>
+    </div>
+   }
+</div>

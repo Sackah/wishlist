@@ -1,0 +1,9 @@
+<div class="col-sm-2">
+    <select class="form-select" title="wish state" 
+      [(ngModel)]="listFilter" (ngModelChange)="updateFilter($event)"
+    >                       <!--When the filter changes pass in a new filter i.e 0, 1, 2-->
+      <option value="0">All</option>
+      <option value="1">Unfulfilled</option>
+      <option value="2">Fulfilled</option>
+    </select>
+  </div>

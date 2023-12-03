@@ -1,0 +1,11 @@
+.strike-through{
+    text-decoration: line-through;
+}
+.text-muted{
+    color: #9f9898 !important;
+}
+.btn-close{
+    color: #eee;
+    opacity: 1;
+    background: transparent url(../../../assets/close-button.svg);
+}

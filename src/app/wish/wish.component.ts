@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WishItem } from '../../shared/models/wishItem';
 import { WishListComponent } from './wish-list/wish-list.component';
@@ -6,6 +6,7 @@ import { AddWishFormComponent } from './add-wish-form/add-wish-form.component';
 import { WishFilterComponent } from './wish-filter/wish-filter.component';
 import { EventService } from '../../shared/services/EventService';
 import { WishesService } from '../../shared/services/wishes.service';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-wish',
@@ -19,13 +20,14 @@ import { WishesService } from '../../shared/services/wishes.service';
   templateUrl: './wish.component.html',
   styleUrl: './wish.component.css',
 })
-export class WishComponent implements OnInit {
+export class WishComponent implements OnInit, OnDestroy {
   title = 'wishlist';
   items: WishItem[] = [
     // new WishItem('Learn Angular'),
     // new WishItem('Get Cofee', true),
     // new WishItem('Find grass that cuts itself'),
   ];
+  wishesSubscription!: Subscription;
 
   constructor(
     private events: EventService,
@@ -39,7 +41,7 @@ export class WishComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.wishesService.getWishes().subscribe({
+    this.wishesSubscription = this.wishesService.getWishes().subscribe({
       next: (data: WishItem[]) => {
         this.items = data;
       },
@@ -50,6 +52,9 @@ export class WishComponent implements OnInit {
         console.log('fetched wishes');
       },
     });
+  }
+  ngOnDestroy(): void {
+    this.wishesSubscription.unsubscribe();
   }
 
   // filter initially returns true so all items be displayed
